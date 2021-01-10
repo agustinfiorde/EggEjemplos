@@ -72,11 +72,11 @@ public class UsuarioDAO extends DAO {
                 usuario.setCorreoElectronico(resultado.getString(2));
                 usuario.setClave(resultado.getString(3));
             }
+            desconectarBase();
             return usuario;
         } catch (Exception e) {
-            throw e;
-        } finally {
             desconectarBase();
+            throw e;
         }
     }
 
@@ -95,12 +95,12 @@ public class UsuarioDAO extends DAO {
                 usuario.setClave(resultado.getString(2));
                 usuarios.add(usuario);
             }
+            desconectarBase();
             return usuarios;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Error de sistema");
-        } finally {
             desconectarBase();
+            throw new Exception("Error de sistema");
         }
     }
 }

@@ -4,11 +4,9 @@ import eggjpa.entidades.Direccion;
 import eggjpa.entidades.Mascota;
 import eggjpa.entidades.Persona;
 import eggjpa.enums.Rol;
-import eggjpa.persistencia.DireccionDAO;
 import eggjpa.persistencia.PersonaDAO;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class PersonaServicio {
 

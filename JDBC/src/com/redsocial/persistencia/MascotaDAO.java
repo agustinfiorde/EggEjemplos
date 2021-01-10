@@ -71,12 +71,12 @@ public class MascotaDAO extends DAO {
                 mascota.setRaza(resultado.getString(3));
                 mascota.setIdUsuario(resultado.getInt(4));
             }
+            desconectarBase();
             return mascota;
         } catch (Exception e) {
-            throw e;
-        } finally {
             desconectarBase();
-        }
+            throw e;
+        } 
     }
 
     public Collection<Mascota> listarMascota() throws Exception {
@@ -96,12 +96,12 @@ public class MascotaDAO extends DAO {
                 mascota.setIdUsuario(resultado.getInt(4));
                 mascotas.add(mascota);
             }
+            desconectarBase();
             return mascotas;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Error de sistema");
-        } finally {
             desconectarBase();
+            throw new Exception("Error de sistema");
         }
     }
 }
