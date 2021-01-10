@@ -1,23 +1,12 @@
 package com.redsocial.dominio.usuario;
 
-
 import com.redsocial.persistencia.UsuarioDAO;
 import java.util.Collection;
 
-/**
- *
- * @author Leo
- */
 public class UsuarioService {
     
     private  UsuarioDAO dao = new UsuarioDAO();
-           
-    /**
-    * Método crea un usuario en el sistema para publicar mascota
-    * @param correoElectronico
-    * @param clave
-    * @throws com.redsocial.dominio.usuario.Exception
-    */
+
     public void crearUsuario(String correoElectronico, String clave)throws Exception{
         
       try{
@@ -40,11 +29,12 @@ public class UsuarioService {
           throw new Exception("La clave no puede tener menos de 8 caracteres");  
         }
         
-        
-        try{
-           buscarUsuarioPorCorreoElectronico(correoElectronico);
-           throw new Exception("Ya existe un usuario con el correo electrónico indicado");
-        }catch(Exception r){} 
+//        try{
+//           buscarUsuarioPorCorreoElectronico(correoElectronico);
+//           throw new Exception("Ya existe un usuario con el correo electrónico indicado");
+//        }catch(Exception r){
+//        
+//        } 
         
         //Creamos el usuario
         Usuario usuario = new Usuario();
@@ -58,14 +48,7 @@ public class UsuarioService {
         throw new Exception("Error de sistema");   
       } 
     }
-    
-    /**
-    * Método que modficia la clave de usuario
-    * @param correoElectronico
-    * @param claveActual
-    * @param nuevaClave
-    * @throws com.redsocial.dominio.usuario.Exception
-    */
+
     public void modificarClaveUsuario(String correoElectronico, String claveActual, String nuevaClave)throws Exception{
         
       try{
@@ -101,12 +84,7 @@ public class UsuarioService {
         throw new Exception("Error de sistema");   
       } 
     }
-    
-    /**
-    * Método que pertmite eliminar un usuario
-    * @param correoElectronico 
-    * @throws com.redsocial.dominio.usuario.Exception
-    */
+
     public void eliminarUsuario (String correoElectronico)throws Exception{
         
       try{
@@ -124,12 +102,6 @@ public class UsuarioService {
       }
     }
     
-    /**
-    * Método que pertmite buscar un usuario por correo electrónico
-    * @param correoElectronico
-    * @return reroena un usuario 
-    * @throws com.redsocial.dominio.usuario.Exception
-    */
     public Usuario buscarUsuarioPorCorreoElectronico(String correoElectronico)throws Exception{
         
         try{
@@ -168,10 +140,6 @@ public class UsuarioService {
         }
     }
   
-    /**
-    * Método que pertmite imprimir los usuarios
-    * @throws com.redsocial.dominio.usuario.Exception
-    */
     public void imprimirUsuarios()throws Exception{
         
       try{
@@ -185,8 +153,7 @@ public class UsuarioService {
         }else{
           for (Usuario u : usuarios){
               
-            System.out.println(u.getCorreoElectronico());
-            System.out.println(u.getClave());
+              System.out.println(u);
             
           }  
         }  

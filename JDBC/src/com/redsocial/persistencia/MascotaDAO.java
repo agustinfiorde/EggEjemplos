@@ -1,28 +1,21 @@
 package com.redsocial.persistencia;
 
-import com.redsocial.dominio.usuario.Usuario;
+import com.redsocial.dominio.mascota.Mascota;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- *
- * @author Leo
- */
 public class MascotaDAO extends DAO {
 
-    public void guardarUsuario(Usuario usuario) throws Exception {
+    public void guardarMascota(Mascota mascota) throws Exception {
         try {
-            if (usuario == null) {
-                throw new Exception("Debe indicar el usuario");
+            if (mascota == null) {
+                throw new Exception("Debe indicar el mascota");
             }
             //Armo el sql
-            String sql = "INSERT "
-                    + "  INTO Usuario (correoElectronico, clave)"
-                    + "VALUES ("
-                    + "'" + usuario.getCorreoElectronico() + "'"
-                    + "," + "'" + usuario.getClave() + "'"
-                    + "         );";
+            String sql = "INSERT INTO Mascota (apodo, raza, idUsuario) "
+                    + "VALUES ( '" + mascota.getApodo() + "' , '" + mascota.getRaza() + "' ," + mascota.getIdUsuario() + " );";
 
+            System.out.println(sql);
             //Ejecuto el sql
             insertarModificarEliminar(sql);
         } catch (Exception e) {
@@ -32,15 +25,15 @@ public class MascotaDAO extends DAO {
         }
     }
 
-    public void modificarUsuario(Usuario usuario) throws Exception {
+    public void modificarMascota(Mascota mascota) throws Exception {
         try {
-            if (usuario == null) {
-                throw new Exception("Debe indicar el usuario que desea modificar");
+            if (mascota == null) {
+                throw new Exception("Debe indicar el mascota que desea modificar");
             }
             //Armo el sql
-            String sql = "UPDATE Usuario"
-                    + "   SET clave = '" + usuario.getClave() + "'"
-                    + " WHERE correoElectronico = '" + usuario.getCorreoElectronico() + "'";
+            String sql = "UPDATE Mascota SET "
+                    + " apodo = '" + mascota.getApodo() + "' , raza = '" + mascota.getRaza() + "' , idUsuario = " + mascota.getIdUsuario()
+                    + " WHERE id = '" + mascota.getId() + "'";
             //Ejecuto el sql
             insertarModificarEliminar(sql);
         } catch (Exception e) {
@@ -50,12 +43,10 @@ public class MascotaDAO extends DAO {
         }
     }
 
-    public void eliminarUsuario(String correEletronico) throws Exception {
+    public void eliminarMascota(int id) throws Exception {
         try {
             //Armo el sql
-            String sql = "DELETE         "
-                    + "  FROM Usuario "
-                    + " WHERE correoElectronico = '" + correEletronico + "'";
+            String sql = "DELETE FROM Mascota WHERE id = " + id + "";
             //Ejecuto el sql
             insertarModificarEliminar(sql);
         } catch (Exception e) {
@@ -65,22 +56,22 @@ public class MascotaDAO extends DAO {
         }
     }
 
-    public Usuario buscarUsuarioPorCorreoElectronico(String correoElectronico) throws Exception {
+    public Mascota buscarMascotaPorId(int id) throws Exception {
         try {
             //Armo el sql
-            String sql = "SELECT correoElectronico, clave"
-                    + "  FROM Usuario "
-                    + " WHERE correoElectronico = '" + correoElectronico + "'";
+            String sql = "SELECT * FROM Mascota WHERE id = " + id + "";
             //Consulto la base de datos
             consultarBase(sql);
             //Recorremos el resultado de la consulta
-            Usuario usuario = null;
+            Mascota mascota = null;
             while (resultado.next()) {
-                usuario = new Usuario();
-                usuario.setCorreoElectronico(resultado.getString(1));
-                usuario.setClave(resultado.getString(2));
+                mascota = new Mascota();
+                mascota.setId(resultado.getInt(1));
+                mascota.setApodo(resultado.getString(2));
+                mascota.setRaza(resultado.getString(3));
+                mascota.setIdUsuario(resultado.getInt(4));
             }
-            return usuario;
+            return mascota;
         } catch (Exception e) {
             throw e;
         } finally {
@@ -88,23 +79,24 @@ public class MascotaDAO extends DAO {
         }
     }
 
-    public Collection<Usuario> listarUsuario() throws Exception {
+    public Collection<Mascota> listarMascota() throws Exception {
         try {
             //Armo el sql
-            String sql = "SELECT correoElectronico, clave"
-                    + "  FROM Usuario ";
+            String sql = "SELECT * FROM Mascota ";
             //Consulto la base de datos
             consultarBase(sql);
             //Recorro el resultados de la consulta
-            Usuario usuario = null;
-            Collection<Usuario> usuarios = new ArrayList();
+            Mascota mascota = null;
+            Collection<Mascota> mascotas = new ArrayList();
             while (resultado.next()) {
-                usuario = new Usuario();
-                usuario.setCorreoElectronico(resultado.getString(1));
-                usuario.setClave(resultado.getString(2));
-                usuarios.add(usuario);
+                mascota = new Mascota();
+                mascota.setId(resultado.getInt(1));
+                mascota.setApodo(resultado.getString(2));
+                mascota.setRaza(resultado.getString(3));
+                mascota.setIdUsuario(resultado.getInt(4));
+                mascotas.add(mascota);
             }
-            return usuarios;
+            return mascotas;
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Error de sistema");
