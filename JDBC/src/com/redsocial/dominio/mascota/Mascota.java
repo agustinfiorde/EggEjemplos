@@ -1,20 +1,22 @@
 package com.redsocial.dominio.mascota;
 
+import com.redsocial.dominio.usuario.Usuario;
+
 public class Mascota {
 
     private int id;
     private String apodo;
     private String raza;
-    private int idUsuario;
+    private Usuario usuario;
 
-    public Mascota(int id, String apodo, String raza, int idUsuario) {
+    public Mascota() {
+    }
+
+    public Mascota(int id, String apodo, String raza, Usuario usuario) {
         this.id = id;
         this.apodo = apodo;
         this.raza = raza;
-        this.idUsuario = idUsuario;
-    }
-
-    public Mascota() {
+        this.usuario = usuario;
     }
 
     public int getId() {
@@ -41,17 +43,17 @@ public class Mascota {
         this.raza = raza;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
     public String toString() {
-        return "Mascota{" + "id=" + id + ", apodo=" + apodo + ", raza=" + raza + ", idUsuario=" + idUsuario + '}';
+        return "Mascota{" + "id=" + id + ", apodo=" + apodo + ", raza=" + raza + ",\n usuario=" + usuario + '}';
     }
 
 }

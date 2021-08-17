@@ -6,23 +6,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DAO {
+public abstract class DAO {
 
     protected Connection conexion = null;
     protected ResultSet resultado = null;
     protected Statement sentencia = null;
-    private final String user = "root";
-    private final String password = "Carmelita23";
-    private final String database = "perros";
+    private final String USER = "root";
+    private final String PASSWORD = "Carmelita23";
+    private final String DATABASE = "perros";
+    private final String DRIVER = "com.mysql.jdbc.Driver";
 
     protected void conectarBase() throws Exception {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + database + "?useSSL=false";
-            conexion = DriverManager.getConnection(urlBaseDeDatos, user, password);
+            Class.forName(DRIVER);
+            String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false";
+            conexion = DriverManager.getConnection(urlBaseDeDatos, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-            throw new Exception("Error de Sistemas");
+            throw ex;
         }
     }
 
@@ -38,28 +38,27 @@ public class DAO {
                 conexion.close();
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new Exception("Error de Sistemas");
+            throw ex;
         }
     }
 
     protected void insertarModificarEliminar(String sql) throws Exception {
         try {
-            //Creo la conexión con la base
             conectarBase();
-            //Creo la sentencia
             sentencia = conexion.createStatement();
-            //Ejecuto la sentencia con el sql pasado como parámetro
             sentencia.executeUpdate(sql);
-
         } catch (SQLException ex) {
-            try {
-                //En caso de error retorno toda módificación para atras
-                conexion.rollback();
-            } catch (SQLException ex1) {
-                throw new Exception("Error de Sistemas");
-            }
-            throw new Exception("Error de Sistemas");
+            // conexion.rollback();
+            /*
+                Descomentar la linea anterior si desean tener en cuenta el rollback.
+                Correr el siguiente script en Workbench
+            
+                SET autocommit=1;
+                COMMIT;
+            
+                **Sin rollback igual anda
+             */
+            throw ex;
         } finally {
             desconectarBase();
         }
@@ -67,15 +66,11 @@ public class DAO {
 
     protected void consultarBase(String sql) throws Exception {
         try {
-            //Creamos la conexión a la base
             conectarBase();
-            //Creamos la sentencia
             sentencia = conexion.createStatement();
-            //Ejecutamos la sentencia y obtenemos los resultados
             resultado = sentencia.executeQuery(sql);
         } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new Exception("Error de Sistemas");
+            throw ex;
         }
     }
 }

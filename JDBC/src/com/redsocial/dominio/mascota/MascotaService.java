@@ -1,17 +1,21 @@
 package com.redsocial.dominio.mascota;
 
 import com.redsocial.dominio.mascota.Mascota;
+import com.redsocial.dominio.usuario.Usuario;
 import com.redsocial.persistencia.MascotaDAO;
 import java.util.Collection;
 
 public class MascotaService {
 
-    private MascotaDAO dao = new MascotaDAO();
+    private MascotaDAO dao;
 
-    public void crearMascota(String apodo, String raza, int idUsuario) throws Exception {
+    public MascotaService() {
+        this.dao = new MascotaDAO();
+    }
+
+    public void crearMascota(String apodo, String raza, Usuario usuario) throws Exception {
 
         try {
-
             //Validamos
             if (apodo == null || apodo.trim().isEmpty()) {
                 throw new Exception("Debe indicar el apodo");
@@ -21,7 +25,7 @@ public class MascotaService {
                 throw new Exception("Debe indicar la raza");
             }
 
-            if (idUsuario < 0) {
+            if (usuario == null) {
                 throw new Exception("Debe indicar el Usuario");
             }
 
@@ -29,13 +33,12 @@ public class MascotaService {
             Mascota mascota = new Mascota();
             mascota.setApodo(apodo);
             mascota.setRaza(raza);
-            mascota.setIdUsuario(idUsuario);
+            mascota.setUsuario(usuario);
 
             dao.guardarMascota(mascota);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Error de sistema");
+            throw e;
         }
     }
 
@@ -64,10 +67,8 @@ public class MascotaService {
             Mascota mascota = buscarMascotaPorId(id);
 
             dao.modificarMascota(mascota);
-
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Error de sistema");
+            throw e;
         }
     }
 
@@ -81,8 +82,7 @@ public class MascotaService {
             }
             dao.eliminarMascota(id);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Error de sistema");
+            throw e;
         }
     }
 
@@ -101,10 +101,8 @@ public class MascotaService {
             }
 
             return mascota;
-
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Error de sistema");
+            throw e;
         }
     }
 
@@ -112,13 +110,11 @@ public class MascotaService {
 
         try {
 
-            Collection<Mascota> mascotas = dao.listarMascota();
+            Collection<Mascota> mascotas = dao.listarMascotas();
 
             return mascotas;
-
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Error de sistema");
+            throw e;
         }
     }
 
@@ -134,15 +130,11 @@ public class MascotaService {
                 throw new Exception("No existen mascotas para imprimir");
             } else {
                 for (Mascota u : mascotas) {
-
                     System.out.println(u.toString());
-
                 }
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Error de sistema");
+            throw e;
         }
     }
 
