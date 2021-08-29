@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public final class MascotaDAO extends DAO {
 
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     public MascotaDAO() {
         this.usuarioService = new UsuarioService();

@@ -11,14 +11,16 @@ public final class UsuarioDAO extends DAO {
             if (usuario == null) {
                 throw new Exception("Debe indicar el usuario");
             }
-            
+
             String sql = "INSERT INTO Usuario (correoElectronico, clave)"
                     + "VALUES ( '" + usuario.getCorreoElectronico() + "' , '" + usuario.getClave() + "' );";
 
             insertarModificarEliminar(sql);
         } catch (Exception e) {
             throw e;
-        } 
+        } finally {
+            desconectarBase();
+        }
     }
 
     public void modificarUsuario(Usuario usuario) throws Exception {
@@ -33,7 +35,9 @@ public final class UsuarioDAO extends DAO {
             insertarModificarEliminar(sql);
         } catch (Exception e) {
             throw e;
-        } 
+        } finally {
+            desconectarBase();
+        }
     }
 
     public void eliminarUsuario(String correEletronico) throws Exception {
@@ -44,7 +48,9 @@ public final class UsuarioDAO extends DAO {
             insertarModificarEliminar(sql);
         } catch (Exception e) {
             throw e;
-        } 
+        } finally {
+            desconectarBase();
+        }
     }
 
     public Usuario buscarUsuarioPorCorreoElectronico(String correoElectronico) throws Exception {
@@ -69,7 +75,7 @@ public final class UsuarioDAO extends DAO {
             throw e;
         }
     }
-    
+
     public Usuario buscarUsuarioPorId(Integer id) throws Exception {
         try {
 
@@ -98,7 +104,7 @@ public final class UsuarioDAO extends DAO {
             String sql = "SELECT correoElectronico, clave FROM Usuario ";
 
             consultarBase(sql);
- 
+
             Usuario usuario = null;
             Collection<Usuario> usuarios = new ArrayList();
             while (resultado.next()) {
