@@ -42,8 +42,16 @@ public class PersonaDAO {
         return persona;
     }
 
-    public List<Persona> buscarPorPaisyProvincia(String pais, String provincia) {
-        List<Persona> personas = em.createQuery("SELECT p FROM Persona p WHERE p.direccion.pais LIKE :pais AND p.direccion.provincia LIKE :provincia ")
+    /**
+     * Revisar esta pagina para aprender mas de los JOIN en JPQL
+     * https://www.baeldung.com/jpa-join-types
+     */
+    public List<Persona> buscarPorPaisYProvincia(String pais, String provincia) {
+        //Opcion 1 sin JOIN
+        //        List<Persona> personas = em.createQuery("SELECT p FROM Persona p WHERE p.direccion.pais LIKE :pais AND p.direccion.provincia LIKE :provincia ")
+        //                .setParameter("pais", pais).setParameter("provincia", provincia).getResultList();
+        //Opcion 2 con JOIN
+        List<Persona> personas = em.createQuery("SELECT p FROM Persona p JOIN p.direccion d WHERE d.pais LIKE :pais AND d.provincia LIKE :provincia ")
                 .setParameter("pais", pais).setParameter("provincia", provincia).getResultList();
         return personas;
     }

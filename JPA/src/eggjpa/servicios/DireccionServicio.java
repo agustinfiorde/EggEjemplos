@@ -5,7 +5,11 @@ import eggjpa.persistencia.DireccionDAO;
 
 public class DireccionServicio {
 
-    private final DireccionDAO direccionDAO = new DireccionDAO();
+    private DireccionDAO direccionDAO;
+    
+    public DireccionServicio(){
+        this.direccionDAO = new DireccionDAO();
+    }
     
     public Direccion crearDireccion(String pais, String provincia) {
         Direccion direccion = new Direccion();

@@ -17,35 +17,14 @@ import java.util.logging.Logger;
 
 public class Menu {
 
-    private static Menu INSTANCIA = null;
-
     private MascotaServicio mascotaServicio;
     private DireccionServicio direccionServicio;
     private PersonaServicio personaServicio;
 
-    private Menu() {
-        if (mascotaServicio == null) {
-            mascotaServicio = new MascotaServicio();
-        }
-        if (direccionServicio == null) {
-            direccionServicio = new DireccionServicio();
-        }
-        if (personaServicio == null) {
-            personaServicio = new PersonaServicio();
-        }
-    }
-
-    private synchronized static void crearInstancia() {
-        if (INSTANCIA == null) {
-            INSTANCIA = new Menu();
-        }
-    }
-
-    public static Menu getInstance() {
-        if (INSTANCIA == null) {
-            crearInstancia();
-        }
-        return INSTANCIA;
+    public Menu() {
+        mascotaServicio = new MascotaServicio();
+        direccionServicio = new DireccionServicio();
+        personaServicio = new PersonaServicio();
     }
 
     public void ejecucion() {
@@ -70,11 +49,12 @@ public class Menu {
         String dniPersona1 = "366";
         Rol rolUser = Rol.USER;
 
-        String nombrePersona2 = "Pepe";
-        String apellidoPersona2 = "Hongo";
+        String nombrePersona2 = "Valen";
+        String apellidoPersona2 = "Holy";
         String dniPersona2 = "377";
         Rol rolAdmin = Rol.ADMIN;
         Date nacimiento = null;
+        
         try {
             String inputDate = "07/28/2011 11:06:37 AM";
             nacimiento = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a").parse(inputDate);
@@ -104,19 +84,21 @@ public class Menu {
         /*
         despues muestro individual y todos
          */
-        personaServicio.listarPersonas().forEach((a)->System.out.println(a.toString()));
-        mascotaServicio.listarMascotas().forEach((a)->System.out.println(a.toString()));
-        
+        personaServicio.listarPersonas().forEach((a) -> System.out.println(a.toString()));
+        mascotaServicio.listarMascotas().forEach((a) -> System.out.println(a.toString()));
+
         /*
         despues elimino
          */
         personaServicio.eliminarPorDni(dniPersona1);
-        
+
         /*
         despues muestro muestro individual y todos
-        */
+         */
         System.out.println("Las personas que quedaron en la base de datos son:");
-        personaServicio.listarPersonas().forEach((a)->System.out.println(a.toString()));
+        personaServicio.listarPersonas().forEach((a) -> System.out.println(a.toString()));
+        
+        System.out.println(personaServicio.buscarPorPaisYProvincia("Chile", "STG"));
     }
 
 }

@@ -10,7 +10,11 @@ import java.util.List;
 
 public class PersonaServicio {
 
-    private final PersonaDAO personaDAO = new PersonaDAO();
+    private PersonaDAO personaDAO;
+    
+    public PersonaServicio(){
+        this.personaDAO = new PersonaDAO(); 
+    }
 
     public Persona crearPersona(String nombre, String apellido, String dni, Date nacimiento, Rol rol, Direccion direccion, List<Mascota> mascotas) {
 
@@ -54,6 +58,15 @@ public class PersonaServicio {
     public List<Persona> listarPersonas() {
         try {
             return personaDAO.listarTodos();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    public List<Persona> buscarPorPaisYProvincia(String pais, String provincia) {
+        try {
+            return personaDAO.buscarPorPaisYProvincia(pais, provincia);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;

@@ -6,7 +6,11 @@ import java.util.List;
 
 public class MascotaServicio {
 
-    private final MascotaDAO mascotaDAO = new MascotaDAO();
+    private MascotaDAO mascotaDAO = new MascotaDAO();
+    
+    public MascotaServicio(){
+        this.mascotaDAO = new MascotaDAO(); 
+    }
 
     public Mascota crearMascota(String nombre, String dni) {
         Mascota mascota = new Mascota();
@@ -32,7 +36,7 @@ public class MascotaServicio {
 
     public boolean eliminarPorDni(String dni) {
         try {
-            mascotaDAO.eliminar(dni);
+            mascotaDAO.eliminarMascota(dni);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
