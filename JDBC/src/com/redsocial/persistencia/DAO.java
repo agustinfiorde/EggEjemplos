@@ -8,9 +8,9 @@ import java.sql.Statement;
 
 public abstract class DAO {
 
-    protected Connection conexion = null;
-    protected ResultSet resultado = null;
-    protected Statement sentencia = null;
+    protected Connection conexion;
+    protected ResultSet resultado;
+    protected Statement sentencia;
     private final String USER = "root";
     private final String PASSWORD = "root";
     private final String DATABASE = "perros";
@@ -49,15 +49,14 @@ public abstract class DAO {
             sentencia.executeUpdate(sql);
         } catch (SQLException ex) {
             // conexion.rollback();
-            /*
-                Descomentar la linea anterior si desean tener en cuenta el rollback.
+            /*  Descomentar la linea anterior si desean tener en cuenta el rollback.
                 Correr el siguiente script en Workbench
             
                 SET autocommit=1;
                 COMMIT;
             
-                **Sin rollback igual anda
-             */
+                **Sin rollback igual anda */
+             
             throw ex;
         } finally {
             desconectarBase();
